@@ -1,10 +1,25 @@
-public class eRyder {
+public class eRyder{
     int bikeID;
-    int batterylevel;
+    int batteryLevel;
     boolean isAvailable;
     int kmDriven;
+
+    public eRyder(){
+        bikeID=123456;
+        batteryLevel=0;
+        isAvailable=true;
+        kmDriven=0;
+    }
+    public eRyder(int bikeID,int batteryLevel,boolean isAvailable,int kmDriven)
+    {
+        this.bikeID=bikeID;
+        this.batteryLevel=batteryLevel;
+        this.isAvailable=isAvailable;
+        this.kmDriven=kmDriven;
+    }
+    
     public boolean ride(){
-    if(batterylevel>=0){
+    if(batteryLevel>=0){
         if(isAvailable==true){
             System.out.println("This bike is availability");
             return true;
@@ -19,21 +34,10 @@ public class eRyder {
     return false;
     }
     }
-
-    public void printBikeDetails(){
+     public void printBikeDetails(){
         System.out.println("bike ID:"+bikeID);
-        System.out.println("battery level:"+batterylevel);
+        System.out.println("battery level:"+batteryLevel);
         System.out.println("bike availability:"+isAvailable);
         System.out.println("distance travelled in km:"+kmDriven);
-    }
-    public void setbatterylevel(int batterylevel){
-        this.batterylevel=batterylevel;
-    }
-
-}
-class main{
-    public static void main(String[] args){
-        eRyder myBike = new eRyder();
-        myBike.printBikeDetails();
     }
 }
