@@ -10,6 +10,5 @@ eRyder e4=new eRyder(12345,6,true,200);
 e3.printBikeDetails();
 e4.printBikeDetails();
 
-
 }
 }
