@@ -1,0 +1,8 @@
+public class Main{
+      public static void main(String[] args) 
+      {
+        Auditor auditor=new Auditor();
+        auditor.accountNumberInput();
+        System.out.println(auditor);
+      }
+}
