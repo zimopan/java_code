@@ -22,7 +22,7 @@ Scanner scanner=new Scanner(System.in);
 List<RegisteredUsers> registeredUsers = new ArrayList<>();
 
 public void userManagementOptions(){
-    // 循环显示菜单，直到选择5退出
+  
     while(true) {
         System.out.println("Welcome to E-Ryder Administrator Panel.");
         System.out.println("What do you want to do?");
@@ -30,7 +30,8 @@ public void userManagementOptions(){
                             "2. View Registered Users\r\n" +
                             "3. Remove Registered Users\r\n" + 
                             "4. Update Registered Users\r\n" + 
-                            "5. EXIT");
+                            "5. Demo the Bike Rental System\n" +
+                            "6. EXIT");
         choice = scanner.nextLine();
         
         if(choice.equals("1")) {
@@ -46,6 +47,10 @@ public void userManagementOptions(){
             updateRegisteredUsers();
         }
         else if(choice.equals("5")) {
+            BikeRental bikeRental = new BikeRental();
+            bikeRental.simulateApplicationInput();
+        }
+        else if(choice.equals("6")) {
             System.out.println("Exiting program...");
             break;
         }
@@ -270,4 +275,6 @@ private void addNewUsers(){
         userToUpdate.setLastThreeTrips(newTrips);
     }
     }
+
+    
 }
