@@ -41,7 +41,7 @@ public class BikeService {
         } else {
             System.out.println("Sorry, we're unable to reserve a bike at this time. Please try again later.");
             BikeRequest bikesinglerequest=new BikeRequest(emailAddress, location, LocalDateTime.now());
-            bikeRequest.add(bikesinglerequest);
+            bikeRequestqueue.add(bikesinglerequest);
         }
         return null;
     }
@@ -78,8 +78,8 @@ public class BikeService {
             if (bike.getBikeID().equals(bikeID)) {
                 bike.setAvailable(true);
                 bike.setLastUsedTime(LocalDateTime.now());
-                if(!bikeRequest.isEmpty()){
-                    bikeRequest.clear();
+                if(!bikeRequestqueue.isEmpty()){
+                    bikeRequestqueue.clear();
                 }
                 System.out.println("Your trip has ended. Thank you for riding with us.");
                 break;
