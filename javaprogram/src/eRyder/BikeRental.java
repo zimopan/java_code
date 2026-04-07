@@ -15,7 +15,7 @@ public class BikeRental {
     UserRegistration userRegistration = new UserRegistration();
     LinkedList<ActiveRental> activeRentalsList = new LinkedList<>();
 
-    public void simulateApplicationInput() {
+    public void simulateApplicationInput(RegisteredUsers user) {
         System.out.println("This is the simulation of the e-bike rental process.");
         System.out.print("Please enter if you are a registered user (true/false): ");
         isRegisteredUser = scanner.nextBoolean();
@@ -78,23 +78,5 @@ public class BikeRental {
         }
     }
 
-    public void removeTrip(String bikeID) {
-        Iterator<ActiveRental> iterator = activeRentalsList.iterator();
-        while (iterator.hasNext()) {
-            ActiveRental rental = iterator.next();
-            if (rental.getBikeID().equals(bikeID)) {
-                iterator.remove();
-                break;
-            }
-        }
-
-        for (Bike bike : BikeDatabase.bikes) {
-            if (bike.getBikeID().equals(bikeID)) {
-                bike.setAvailable(true);
-                bike.setLastUsedTime(LocalDateTime.now());
-                System.out.println("Your trip has ended. Thank you for riding with us.");
-                break;
-            }
-        }
-    }
+    
 }

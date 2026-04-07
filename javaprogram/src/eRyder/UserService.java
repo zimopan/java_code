@@ -8,91 +8,105 @@ import java.util.Scanner;
 public class UserService {
     List<RegisteredUsers> registeredUsers = new ArrayList<>();
     Scanner scanner = new Scanner(System.in);
+    
+    public List<RegisteredUsers> addNewUsers() {  
+    System.out.println("how many users:");
+    int usernumber = scanner.nextInt();
+    scanner.nextLine();
 
-    public void addNewUsers() {
-        System.out.println("how many users:");
-        int usernumber = scanner.nextInt();
+    List<RegisteredUsers> newlyCreatedUsers = new ArrayList<>(); 
+        
+    String[] lastThreeTrips = new String[3];
+    String fullName = null;
+    String emailAddress = null;
+    String dateOfBirth = null;
+    long cardNumber = 0;
+    String cardProvider = null;
+    String cardExpiryDate = null;
+    int cvv = 0;
+    String userType = null;
+
+    for (int i = 0; i < usernumber; i++) {
+        System.out.println("\n Adding User " + (i + 1));
+
+        System.out.print("Enter name: ");
+        fullName = scanner.nextLine();
+
+        System.out.print("Enter email address: ");
+        emailAddress = scanner.nextLine();
+
+        System.out.print("Enter date of birth (YYYY-MM-DD): ");
+        dateOfBirth = scanner.nextLine();
+
+        System.out.print("Enter card number: ");
+        cardNumber = scanner.nextInt();
         scanner.nextLine();
 
-        String[] lastThreeTrips = new String[3];
-        String fullName = null;
-        String emailAddress = null;
-        String dateOfBirth = null;
-        long cardNumber = 0;
-        String cardProvider = null;
-        String cardExpiryDate = null;
-        int cvv = 0;
-        String userType = null;
+        System.out.print("Enter card provider: ");
+        cardProvider = scanner.nextLine();
 
-        for (int i = 0; i < usernumber; i++) {
-            System.out.println("\n Adding User " + (i + 1));
+        System.out.print("Enter card expiry date (MM/YY): ");
+        cardExpiryDate = scanner.nextLine();
 
-            System.out.print("Enter name: ");
-            fullName = scanner.nextLine();
+        System.out.print("Enter CVV: ");
+        cvv = scanner.nextInt();
+        scanner.nextLine();
 
-            System.out.print("Enter email address: ");
-            emailAddress = scanner.nextLine();
+        System.out.print("Enter user type (e.g., Admin, Regular, Premium): ");
+        userType = scanner.nextLine();
 
-            System.out.print("Enter date of birth (YYYY-MM-DD): ");
-            dateOfBirth = scanner.nextLine();
+        System.out.print("Enter three trips: ");
 
-            System.out.print("Enter card number: ");
-            cardNumber = scanner.nextInt();
+        for (int a = 0; a < 3; a++) {
+            System.out.println("\nTrip " + (a + 1));
+
+            System.out.print("Enter the date of the trip (YYYY-MM-DD): ");
+            String date = scanner.nextLine();
+
+            System.out.print("Enter source (e.g., NJIT Gate 5): ");
+            String source = scanner.nextLine();
+
+            System.out.print("Enter destination (e.g., Wending Square): ");
+            String destination = scanner.nextLine();
+
+            System.out.print("Enter fare paid : ");
+            double fare = scanner.nextDouble();
             scanner.nextLine();
 
-            System.out.print("Enter card provider: ");
-            cardProvider = scanner.nextLine();
+            System.out.print("Enter feedback (or press Enter for NULL): ");
+            String feedback = scanner.nextLine();
 
-            System.out.print("Enter card expiry date (MM/YY): ");
-            cardExpiryDate = scanner.nextLine();
+            StringBuilder tripBuilder = new StringBuilder();
+            tripBuilder.append("Date: ").append(date)
+                    .append(", Source: ").append(source)
+                    .append(", Destination: ").append(destination)
+                    .append(", Fare : ").append(fare)
+                    .append(", Feedback: ").append(feedback);
 
-            System.out.print("Enter CVV: ");
-            cvv = scanner.nextInt();
-            scanner.nextLine();
-
-            System.out.print("Enter user type (e.g., Admin, Regular, Premium): ");
-            userType = scanner.nextLine();
-
-            System.out.print("Enter three trips: ");
-
-            for (int a = 0; a < 3; a++) {
-                System.out.println("\nTrip " + (a + 1));
-
-                System.out.print("Enter the date of the trip (YYYY-MM-DD): ");
-                String date = scanner.nextLine();
-
-                System.out.print("Enter source (e.g., NJIT Gate 5): ");
-                String source = scanner.nextLine();
-
-                System.out.print("Enter destination (e.g., Wending Square): ");
-                String destination = scanner.nextLine();
-
-                System.out.print("Enter fare paid : ");
-                double fare = scanner.nextDouble();
-                scanner.nextLine();
-
-                System.out.print("Enter feedback (or press Enter for NULL): ");
-                String feedback = scanner.nextLine();
-
-                StringBuilder tripBuilder = new StringBuilder();
-                tripBuilder.append("Date: ").append(date)
-                        .append(", Source: ").append(source)
-                        .append(", Destination: ").append(destination)
-                        .append(", Fare : ").append(fare)
-                        .append(", Feedback: ").append(feedback);
-
-                lastThreeTrips[a] = tripBuilder.toString();
-            }
+            lastThreeTrips[a] = tripBuilder.toString();
         }
-
-        System.out.println("\n Last Three Trips");
-        for (int i = 0; i < lastThreeTrips.length; i++) {
-            System.out.println("Trip " + (i + 1) + ": " + lastThreeTrips[i]);
-        }
-
-        RegisteredUsers newuser1 = new RegisteredUsers(fullName, emailAddress, dateOfBirth, cardNumber, cardProvider, cardExpiryDate, cvv, userType, lastThreeTrips);
-        registeredUsers.add(newuser1);
     }
+
+    System.out.println("\n Last Three Trips");
+    for (int i = 0; i < lastThreeTrips.length; i++) {
+        System.out.println("Trip " + (i + 1) + ": " + lastThreeTrips[i]);
+    }
+
+    RegisteredUsers newUser;
+    if (userType.equalsIgnoreCase("VIP")) {
+        newUser = new VIPUser(fullName, emailAddress, dateOfBirth,
+                              cardNumber, cardProvider, cardExpiryDate,
+                              cvv, userType, lastThreeTrips);
+    } else {
+        newUser = new RegularUser(fullName, emailAddress, dateOfBirth,
+                                  cardNumber, cardProvider, cardExpiryDate,
+                                  cvv, userType, lastThreeTrips);
+    }
+    registeredUsers.add(newUser);
+    newlyCreatedUsers.add(newUser);  
+    
+    return newlyCreatedUsers;
+}
 
     public void viewRegisteredUsers() {
         if (registeredUsers.isEmpty()) {
@@ -222,4 +236,6 @@ public class UserService {
 
         userToUpdate.setLastThreeTrips(newTrips);
     }
-}
+
+    
+    }

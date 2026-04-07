@@ -9,7 +9,13 @@ public class RentalService {
 
 
     private final LinkedList<ActiveRental> activeRentalsList = new LinkedList<>();
-
+    double BASE_FARE=3.0;
+    private RegisteredUsers currentUser; 
+    
+ 
+    public void setCurrentUser(RegisteredUsers user) {
+        this.currentUser = user;
+    }
    
     public void startRental(String bikeID, String emailAddress, LocalDateTime tripStartTime) {
         ActiveRental activeRental = new ActiveRental(bikeID, emailAddress, tripStartTime);
@@ -49,4 +55,32 @@ public class RentalService {
             }
         }
     }
+
+
+
+    public void removeTrip(String bikeID) {
+        Iterator<ActiveRental> iterator = activeRentalsList.iterator();
+        while (iterator.hasNext()) {
+            ActiveRental rental = iterator.next();
+            if (rental.getBikeID().equals(bikeID)) {
+                iterator.remove();
+                break;
+            }
+        }
+
+        for (Bike bike : BikeDatabase.bikes) {
+            if (bike.getBikeID().equals(bikeID)) {
+                bike.setAvailable(true);
+                bike.setLastUsedTime(LocalDateTime.now());
+     
+                if (currentUser != null) {
+                    currentUser.calculateFare(BASE_FARE);
+                }
+                
+                System.out.println("Your trip has ended. Thank you for riding with us.");
+                break;
+            }
+        }
+    }
+    
 }

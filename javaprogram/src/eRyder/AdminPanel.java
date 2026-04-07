@@ -1,5 +1,6 @@
 package eRyder;
 
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -29,6 +30,10 @@ public class AdminPanel {
             switch (choice) {
                 case "1":
                     userService.addNewUsers();
+                    List<RegisteredUsers> newUsers = userService.addNewUsers();
+                    System.out.println("Successfully created " + newUsers.size() + " user(s):");
+                    for (RegisteredUsers user : newUsers) {
+                        System.out.println("  - " + user.getFullName() + " (" + user.getUserType() + ")");}
                     break;
                 case "2":
                     userService.viewRegisteredUsers();
@@ -40,8 +45,13 @@ public class AdminPanel {
                     userService.updateRegisteredUsers();
                     break;
                 case "5":
-                    BikeRental bikeRental = new BikeRental();
-                    bikeRental.simulateApplicationInput();
+                    if (!userService.registeredUsers.isEmpty()) {
+                        RegisteredUsers userForRental = userService.registeredUsers.get(0);
+                        BikeRental bikeRental = new BikeRental();
+                        bikeRental.simulateApplicationInput(userForRental);  
+                    } else {
+                        System.out.println("No registered users found. Please add a user first (Option 1).");
+                    }
                     break;
                 case "6":
                     for(ERyderLog eRyderLog:BikeService.stack)
